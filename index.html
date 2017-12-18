@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Driver's License</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+    <style>
+
+      body
+      {
+        margin: 0;
+        padding: 0;
+
+        font-family: Roboto;
+        background-color: #FAFAFA;
+      }
+
+      .container
+      {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr 1fr;
+        grid-template-areas:
+          ". content .";
+
+        margin-top: 25px;
+      }
+
+      .content
+      {
+        grid-area: content;
+      }
+
+      input
+      {
+        box-sizing:border-box;
+      }
+
+      .dl-container
+      {
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+          "dl-input"
+          "dl-personal"
+          "dl-data"
+          "dl-stats"
+          "dl-detail"
+          "buttons";
+      }
+
+      .dl-input
+      {
+        grid-area: dl-input;
+        height: 49px;
+        border-bottom: 1px #E0E0E0 solid;
+        text-align:center
+      }
+
+      .dl-personal
+      {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+          "fname mname lname bdate";
+
+        grid-area: dl-personal;
+        text-align: center;
+        height: 40px;
+      }
+
+      .fname
+      {
+        grid-area: fname;
+        text-align: center;
+      }
+
+      .mname
+      {
+        grid-area: mname;
+        text-align: center;
+      }
+
+      .lname
+      {
+        grid-area: lname;
+        text-align: center;
+      }
+
+      .bdate
+      {
+        grid-area: bdate;
+        text-align: center;
+      }
+
+      .dl-data
+      {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+          "address city state";
+
+
+        grid-area: dl-data;
+        text-align: center;
+        height: 40px;
+      }
+
+      .address
+      {
+        grid-area: address;
+      }
+
+      .city
+      {
+        grid-area: city;
+      }
+
+      .state
+      {
+        grid-area: state;
+      }
+
+      .dl-stats
+      {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas:
+          "jurisdiction dlid exp";
+
+        grid-area: dl-stats;
+        text-align: center;
+        height: 40px;
+        border-bottom: 1px #E0E0E0 solid;
+      }
+
+      .jurisdiction
+      {
+        grid-area: jurisdiction;
+      }
+
+      .dlid
+      {
+        grid-area: dlid;
+      }
+
+      .exp
+      {
+        grid-area: exp;
+      }
+
+      .buttons
+      {
+        grid-area: buttons;
+        height: 50px;
+      }
+
+
+
+      .card
+      {
+        background-color: #FFF;
+        border-radius: 2px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+      }
+
+    </style>
+
+    <script>
+
+    </script>
+
+  </head>
+  <body>
+
+    <div class="container">
+      <div class="content">
+        <div class="card">
+
+          <div class="dl-input">
+            <input style="width:90%; border-radius:2px; margin-top:15px; border:1px solid #D4D4D4;">
+          </div>
+
+          <div class="dl-personal">
+            <div class="fname">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="mname">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="lname">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="bdate">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+          </div>
+
+          <div class="dl-data">
+            <div class="address">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="city">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="state">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+          </div>
+
+          <div class="dl-stats">
+            <div class="jurisdiction">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="dlid">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="exp">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+          </div>
+
+          <div class="buttons">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </body>
+</html>
