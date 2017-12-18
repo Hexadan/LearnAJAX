@@ -1,0 +1,29 @@
+MagTek 21040145 SureSwipe Reader*
+
+*If there is data encoded on the card, the reader will attempt to decode the data and then send the
+results to the host as if the data was being typed on a keyboard. After the results are sent to the
+host, the device will be ready to read the next card.
+
+
+three processes
+- check if patron is banned
+- ban patron
+- unban patron
+
+
+process #1
+
+swipe card
+check if patron is banned against database
+if so, access denied
+if not, add patron to temp database (~24-hours)
+
+process #2
+
+select user
+add to banned database
+
+process #3
+
+select user
+remove from banned database

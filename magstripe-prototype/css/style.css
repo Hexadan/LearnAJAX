@@ -1,0 +1,36 @@
+body
+{
+  margin: 0;
+}
+
+.container
+{
+  display: grid;
+
+  grid-template-columns: 1fr .6fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    ". input ."
+    ". output ."
+    ". button .";
+}
+
+.input
+{
+  grid-area: input;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.output
+{
+  grid-area: output;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.button
+{
+  grid-area: button;
+
+}

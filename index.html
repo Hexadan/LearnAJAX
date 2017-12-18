@@ -131,7 +131,6 @@
         grid-area: dl-stats;
         text-align: center;
         height: 40px;
-        border-bottom: 1px #E0E0E0 solid;
       }
 
       .jurisdiction
@@ -147,6 +146,44 @@
       .exp
       {
         grid-area: exp;
+      }
+
+      .dl-detail
+      {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-areas:
+          "gender height weight haircolor eyecolor";
+
+        grid-area: dl-data;
+        text-align: center;
+        border-bottom: 1px #E0E0E0 solid;
+        height: 40px;
+      }
+
+      .gender
+      {
+        grid-area: gender;
+      }
+
+      .height
+      {
+        grid-area: height;
+      }
+
+      .weight
+      {
+        grid-area: weight;
+      }
+
+      .haircolor
+      {
+        grid-area: haircolor;
+      }
+
+      .eyecolor
+      {
+        grid-area: eyecolor;
       }
 
       .buttons
@@ -216,6 +253,24 @@
               <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
             </div>
             <div class="exp">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+          </div>
+
+          <div class="dl-detail">
+            <div class="gender">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="height">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="weight">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="haircolor">
+              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="eyecolor">
               <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
             </div>
           </div>

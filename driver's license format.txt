@@ -1,0 +1,26 @@
+%OHCANAL WNCHSTRMCALEA$DANIEL$JOSEPH$^6561 HEMMINGFORD DR^?;6360231926140638=210619960607?#10431108457  D B             1506153BROBRO                          [^/,AO     ?
+%OHLANCASTER^WILLARD$BRIAN$G$^4705 BAUMAN HILL RD SE^?;6360231814841306=180619710619?#10431309491  A P2        P   1600205BROHAZ                          VJ-/U9     ?
+%OHCANAL WINCHSTAUMAN$NOAH$D$^47 W WATERLOO ST^?;6360231902574066=210719840710?#10431101139  D B             1506150BLKHAZ                          0;")ME     ?
+
+
+
+
+
+________________________________________________________________________________________________________________________
+|                                                                                                                      |
+| %(State)(City)(Lastname)$(Firstname)$(Middlename/Initial)$^(Address)^?                                               |
+|                                                                                                                      |
+| ;(6 Digits | 10 Digits ID/DL Number)=(ExperiationYY)(ExperiationMM)(BirthdayYYYY/MM/DD)?                             |
+|                                                                                                                      |
+| #(TemplateVersionNumber)(SecurityVersionNumber) (DriversLicenseClass) (Sex)(Height)(Weight)(Haircolor)(Eyecolor)     |
+|______________________________________________________________________________________________________________________|
+|                                                                                                                      |
+|%|OH|CANAL WNCHSTR|MCALEA$DANIEL$JOSEPH$|^6561 HEMMINGFORD DR^|?|                                                     |
+|                                                                                                                      |
+|;|636023|1926140638=|21|06|19960607|?|                                                                                |
+|                                                                                                                      |
+|#|1|0|431108457|  |D B|             1506153BROBRO                          [^/,AO     ?                               |
+|______________________________________________________________________________________________________________________|
+
+
+source: http://www.exeba.com/comm40/usadriverlisc.htm
