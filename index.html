@@ -51,18 +51,29 @@
 
       .dl-input
       {
+        display: grid;
+        grid-template-columns: 10px 1fr 10px;
+        grid-template-areas:
+          ". string .";
+
         grid-area: dl-input;
         height: 49px;
         border-bottom: 1px #E0E0E0 solid;
-        text-align:center
+        text-align:center;
+      }
+
+      .string
+      {
+        grid-area: string;
       }
 
       .dl-personal
       {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-columns: 10px 1fr 1fr 1fr 0.5fr 10px;
         grid-template-areas:
-          "fname mname lname bdate";
+          ". fname mname lname bdate .";
+        grid-column-gap: 6px;
 
         grid-area: dl-personal;
         text-align: center;
@@ -96,9 +107,10 @@
       .dl-data
       {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 10px 1.3fr 1fr .3fr 10px;
         grid-template-areas:
-          "address city state";
+          ". address city state .";
+        grid-column-gap: 6px;
 
 
         grid-area: dl-data;
@@ -124,9 +136,10 @@
       .dl-stats
       {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 10px .8fr 1fr .44fr 10px;
         grid-template-areas:
-          "jurisdiction dlid exp";
+          ". jurisdiction dlid exp .";
+        grid-column-gap: 6px;
 
         grid-area: dl-stats;
         text-align: center;
@@ -151,9 +164,10 @@
       .dl-detail
       {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: 10px .5fr .3fr .3fr .4fr .4fr 10px;
         grid-template-areas:
-          "gender height weight haircolor eyecolor";
+          ". gender height weight haircolor eyecolor .";
+        grid-column-gap: 6px;
 
         grid-area: dl-data;
         text-align: center;
@@ -190,6 +204,7 @@
       {
         grid-area: buttons;
         height: 50px;
+        text-align: right;
       }
 
 
@@ -203,7 +218,112 @@
 
     </style>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <script>
+
+    $(document).ready(function() {
+      $('#submitBtn').click(function() {
+        //gets the value of the input field
+        var dlInfo = $("#inputString").val();
+
+        var trackOne = dlInfo.substring(dlInfo.indexOf("%"), dlInfo.indexOf("?;"));
+        console.log("Track One: " + trackOne);
+
+        var trackTwo = dlInfo.substring(dlInfo.indexOf("?;"), dlInfo.indexOf("?#"));
+        console.log("Track Two: " + trackTwo);
+
+        var trackThree = dlInfo.substring(dlInfo.indexOf("?#"), dlInfo.length);
+        console.log("Track Three: " + trackThree);
+
+        //removes all white space - might be needed later
+        //dlInfo = dlInfo.replace(/\s/g,'');
+
+
+        //Track One
+        //variables needed for proper output
+        //name variables
+        var name;
+        var lname;
+        var fname;
+        var mname;
+
+        //location variables
+        var address;
+        var city;
+        var state;
+
+        //variable used to output data
+        var output;
+
+        //assigns state initials
+        state = trackOne.substring(1,3);
+
+        //depending on if the city is 13 characters or less, a ^ is placed to seperate between city and information
+        //if the city is exactly 13 characters or more then a ^ won't be placed
+        if((dlInfo.substring(dlInfo.indexOf('%'),dlInfo.indexOf('$'))).includes('^'))
+        {
+          //simple output just to clarify for testing purposes
+          console.log("City is less than 13 characters");
+          //seperates and formats city
+          city = dlInfo.substring(3, dlInfo.indexOf('^'));
+
+          //grabs name information between start (^) and end ($^) of name info
+          name = dlInfo.substring(dlInfo.indexOf('^') + 1, dlInfo.indexOf('$^'));
+          nameArray = name.split('$');
+
+          //assigns and formats name info
+          lname = nameArray[0];
+          fname = nameArray[1];
+          mname = nameArray[2];
+        }
+        else
+        {
+          console.log("City is 13 characters");
+          city = dlInfo.substring(3, 16);
+
+          name = dlInfo.substring(dlInfo.indexOf('$'), dlInfo.indexOf('$^'));
+          nameArray = name.split('$');
+
+          lname = dlInfo.substring(16, dlInfo.indexOf('$'));
+          fname = nameArray[1];
+          mname = nameArray[2];
+        }
+
+        address = dlInfo.substring(dlInfo.indexOf('$^') + 2, dlInfo.indexOf('^?'));
+
+        //Track Two
+        jurisdictionID = trackTwo.substring(2,8);
+
+        dlID = trackTwo.substring(8, trackTwo.indexOf("="));
+
+        dateInfo = trackTwo.substring(trackTwo.indexOf("="), trackTwo.length);
+        console.log(dateInfo);
+
+        expiration = dateInfo.substring(3,5) + "/" + dateInfo.substring(1,3);
+        birthdate = dateInfo.substring(9,11) + "/" + dateInfo.substring(11,13) + "/" + dateInfo.substring(5,9);
+
+        //Track Three
+
+
+        //output
+        output =  fname + "\n" + mname + "\n" + lname + "\n" + address + "\n" + city + "\n" + state + "\n" + jurisdictionID + "\n" + dlID  + "\n" + expiration + "\n" + birthdate;
+
+        $('#fname').val(fname);
+        $('#mname').val(mname);
+        $('#lname').val(lname);
+        $('#address').val(address);
+        $('#city').val(city);
+        $('#state').val(state);
+        $('#jurisdiction').val(jurisdictionID);
+        $('#dlid').val(dlID);
+        $('#exp').val(expiration);
+        $('#bdate').val(birthdate);
+
+        $("#inputString").focus();
+        $("#inputString").val("");
+      });
+    });
 
     </script>
 
@@ -215,68 +335,72 @@
         <div class="card">
 
           <div class="dl-input">
-            <input style="width:90%; border-radius:2px; margin-top:15px; border:1px solid #D4D4D4;">
+            <div class="string">
+              <input id="inputString" style="width:98%; border-radius:2px; margin-top:15px; border:1px solid #D4D4D4;">
+            </div>
           </div>
 
           <div class="dl-personal">
             <div class="fname">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="fname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="First Name">
             </div>
             <div class="mname">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="mname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Middle Name">
             </div>
             <div class="lname">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="lname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Last Name">
             </div>
             <div class="bdate">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="bdate" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Birth Date">
             </div>
           </div>
 
           <div class="dl-data">
             <div class="address">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="address" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Address">
             </div>
             <div class="city">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="city" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="City">
             </div>
             <div class="state">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="state" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="State">
             </div>
           </div>
 
           <div class="dl-stats">
             <div class="jurisdiction">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="jurisdiction" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Jurisdiction #">
             </div>
             <div class="dlid">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="dlid" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Driver's License ID">
             </div>
             <div class="exp">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="exp" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Expiration Date">
             </div>
           </div>
 
           <div class="dl-detail">
             <div class="gender">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="gender" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Gender">
             </div>
             <div class="height">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="height" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Height">
             </div>
             <div class="weight">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="weight" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Weight">
             </div>
             <div class="haircolor">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="haircolor" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Hair Color">
             </div>
             <div class="eyecolor">
-              <input style="width:90%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;">
+              <input id="eyecolor" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Eye Color">
             </div>
           </div>
 
           <div class="buttons">
+            <button id="submitBtn" style="height:25px; border:0; color:#000000; background-color:#42a5f5; border-radius:2px; margin:12px 10px;">Execute</button>
           </div>
+
         </div>
       </div>
     </div>
