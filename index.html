@@ -207,8 +207,6 @@
         text-align: right;
       }
 
-
-
       .card
       {
         background-color: #FFF;
@@ -234,6 +232,7 @@
         console.log("Track Two: " + trackTwo);
 
         var trackThree = dlInfo.substring(dlInfo.indexOf("?#"), dlInfo.length);
+        trackThree = trackThree.replace(/\s/g,'');
         console.log("Track Three: " + trackThree);
 
         //removes all white space - might be needed later
