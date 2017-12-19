@@ -39,13 +39,12 @@
       .dl-container
       {
         display: grid;
-        grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
         grid-template-areas:
           "dl-input"
           "dl-personal"
           "dl-data"
           "dl-stats"
-          "dl-detail"
           "buttons";
       }
 
@@ -161,49 +160,25 @@
         grid-area: exp;
       }
 
-      .dl-detail
-      {
-        display: grid;
-        grid-template-columns: 10px .5fr .3fr .3fr .4fr .4fr 10px;
-        grid-template-areas:
-          ". gender height weight haircolor eyecolor .";
-        grid-column-gap: 6px;
-
-        grid-area: dl-data;
-        text-align: center;
-        border-bottom: 1px #E0E0E0 solid;
-        height: 40px;
-      }
-
-      .gender
-      {
-        grid-area: gender;
-      }
-
-      .height
-      {
-        grid-area: height;
-      }
-
-      .weight
-      {
-        grid-area: weight;
-      }
-
-      .haircolor
-      {
-        grid-area: haircolor;
-      }
-
-      .eyecolor
-      {
-        grid-area: eyecolor;
-      }
-
       .buttons
       {
+        display: grid;
+        grid-template-columns: 1fr 300px 1fr;
+        grid-template-areas:
+          "passed . execute";
+
         grid-area: buttons;
         height: 50px;
+      }
+
+      .passed
+      {
+        grid-area: passed;
+      }
+
+      .execute
+      {
+        grid-area: execute;
         text-align: right;
       }
 
@@ -319,6 +294,25 @@
         $('#exp').val(expiration);
         $('#bdate').val(birthdate);
 
+        //$.post("display.php",{ firstName: fname }, function(data, status){alert(data + " " + status)});
+
+
+        $.ajax({    //create an ajax request to display.php
+        type: "POST",
+        url: "display.php",
+        dataType: "html",   //expect html to be returned
+        data: {
+          firstName: fname,
+          lastName: lname
+        },
+        success: function(response){
+            $("#passed").html(response);
+            //alert(response);
+        }
+
+        });
+
+
         $("#inputString").focus();
         $("#inputString").val("");
       });
@@ -378,26 +372,11 @@
             </div>
           </div>
 
-          <div class="dl-detail">
-            <div class="gender">
-              <input id="gender" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Gender">
-            </div>
-            <div class="height">
-              <input id="height" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Height">
-            </div>
-            <div class="weight">
-              <input id="weight" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Weight">
-            </div>
-            <div class="haircolor">
-              <input id="haircolor" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Hair Color">
-            </div>
-            <div class="eyecolor">
-              <input id="eyecolor" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Eye Color">
-            </div>
-          </div>
-
           <div class="buttons">
-            <button id="submitBtn" style="height:25px; border:0; color:#000000; background-color:#42a5f5; border-radius:2px; margin:12px 10px;">Execute</button>
+            <div id="passed" class="passed"></div>
+            <div class="execute">
+              <button id="submitBtn" style="height:25px; border:0; color:#000000; background-color:#42a5f5; border-radius:2px; margin:12px 10px;">Execute</button>
+            </div>
           </div>
 
         </div>
