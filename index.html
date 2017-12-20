@@ -44,16 +44,15 @@
           "dl-input"
           "dl-personal"
           "dl-data"
-          "dl-stats"
-          "buttons";
+          "dl-stats";
       }
 
       .dl-input
       {
         display: grid;
-        grid-template-columns: 10px 1fr 10px;
+        grid-template-columns: 10px 1fr .25fr 10px;
         grid-template-areas:
-          ". string .";
+          ". stripe process .";
 
         grid-area: dl-input;
         height: 49px;
@@ -61,9 +60,15 @@
         text-align:center;
       }
 
-      .string
+      .stripe
       {
-        grid-area: string;
+        grid-area: stripe;
+      }
+
+      .process
+      {
+        grid-area: process;
+        text-align: right;
       }
 
       .dl-personal
@@ -160,28 +165,6 @@
         grid-area: exp;
       }
 
-      .buttons
-      {
-        display: grid;
-        grid-template-columns: 1fr 300px 1fr;
-        grid-template-areas:
-          "passed . execute";
-
-        grid-area: buttons;
-        height: 50px;
-      }
-
-      .passed
-      {
-        grid-area: passed;
-      }
-
-      .execute
-      {
-        grid-area: execute;
-        text-align: right;
-      }
-
       .card
       {
         background-color: #FFF;
@@ -189,13 +172,38 @@
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
       }
 
+      .floating-btn
+      {
+        height:26px;
+
+        border:0;
+
+        color:#FFF;
+
+        background-color:#03A9F4;
+
+        border-radius:2px;
+        margin:12px 5px;
+        padding:0 16px;
+
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+      }
+
+      .floating-btn:active
+      {
+        background-color: #0288D1;
+      }
+
     </style>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="jquery.js" charset="utf-8"></script>
 
     <script>
 
     $(document).ready(function() {
+
+      console.log("Ready!");
+
       $('#submitBtn').click(function() {
         //gets the value of the input field
         var dlInfo = $("#inputString").val();
@@ -213,7 +221,6 @@
         //removes all white space - might be needed later
         //dlInfo = dlInfo.replace(/\s/g,'');
 
-
         //Track One
         //variables needed for proper output
         //name variables
@@ -226,9 +233,6 @@
         var address;
         var city;
         var state;
-
-        //variable used to output data
-        var output;
 
         //assigns state initials
         state = trackOne.substring(1,3);
@@ -278,10 +282,7 @@
         birthdate = dateInfo.substring(9,11) + "/" + dateInfo.substring(11,13) + "/" + dateInfo.substring(5,9);
 
         //Track Three
-
-
-        //output
-        output =  fname + "\n" + mname + "\n" + lname + "\n" + address + "\n" + city + "\n" + state + "\n" + jurisdictionID + "\n" + dlID  + "\n" + expiration + "\n" + birthdate;
+        /* Still figuring out how to get gender, height, eye color, etc. */
 
         $('#fname').val(fname);
         $('#mname').val(mname);
@@ -294,8 +295,16 @@
         $('#exp').val(expiration);
         $('#bdate').val(birthdate);
 
-        //$.post("display.php",{ firstName: fname }, function(data, status){alert(data + " " + status)});
-
+        console.log(fname);
+        console.log(mname);
+        console.log(lname);
+        console.log(address);
+        console.log(city);
+        console.log(state);
+        console.log(jurisdictionID);
+        console.log(dlID);
+        console.log(expiration);
+        console.log(birthdate);
 
         $.ajax({    //create an ajax request to display.php
         type: "POST",
@@ -303,11 +312,15 @@
         dataType: "html",   //expect html to be returned
         data: {
           firstName: fname,
-          lastName: lname
+          middleName: mname,
+          lastName: lname,
+          address: address,
+          city: city,
+          state: state
         },
         success: function(response){
-            $("#passed").html(response);
-            //alert(response);
+            //$("#inputString").css(response);
+            alert(response);
         }
 
         });
@@ -328,54 +341,50 @@
         <div class="card">
 
           <div class="dl-input">
-            <div class="string">
-              <input id="inputString" style="width:98%; border-radius:2px; margin-top:15px; border:1px solid #D4D4D4;">
+            <div class="stripe">
+              <input id="inputString" style="height:26px; width:100%; border-radius:2px; margin:12px 5px; border:1px solid #D4D4D4;">
+            </div>
+            <div class="process">
+              <button id="submitBtn" class="floating-btn">Process</button>
             </div>
           </div>
 
           <div class="dl-personal">
             <div class="fname">
-              <input id="fname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="First Name">
+              <input id="fname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="First Name" disabled>
             </div>
             <div class="mname">
-              <input id="mname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Middle Name">
+              <input id="mname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Middle Name" disabled>
             </div>
             <div class="lname">
-              <input id="lname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Last Name">
+              <input id="lname" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Last Name" disabled>
             </div>
             <div class="bdate">
-              <input id="bdate" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Birth Date">
+              <input id="bdate" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Birth Date" disabled>
             </div>
           </div>
 
           <div class="dl-data">
             <div class="address">
-              <input id="address" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Address">
+              <input id="address" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Address" disabled>
             </div>
             <div class="city">
-              <input id="city" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="City">
+              <input id="city" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="City" disabled>
             </div>
             <div class="state">
-              <input id="state" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="State">
+              <input id="state" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="State" disabled>
             </div>
           </div>
 
           <div class="dl-stats">
             <div class="jurisdiction">
-              <input id="jurisdiction" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Jurisdiction #">
+              <input id="jurisdiction" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Jurisdiction #" disabled>
             </div>
             <div class="dlid">
-              <input id="dlid" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Driver's License ID">
+              <input id="dlid" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Driver's License ID" disabled>
             </div>
             <div class="exp">
-              <input id="exp" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Expiration Date">
-            </div>
-          </div>
-
-          <div class="buttons">
-            <div id="passed" class="passed"></div>
-            <div class="execute">
-              <button id="submitBtn" style="height:25px; border:0; color:#000000; background-color:#42a5f5; border-radius:2px; margin:12px 10px;">Execute</button>
+              <input id="exp" style="width:100%; border-radius:2px; margin-top:10px; border:1px solid #D4D4D4;" placeholder="Expiration Date" disabled>
             </div>
           </div>
 
