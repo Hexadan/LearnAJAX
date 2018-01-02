@@ -16,9 +16,9 @@ if((isset($_POST['firstName'])))
   $exp = $_POST['expDate'];
   $bdate = $_POST['birthDate'];
 
-  $query = "SELECT * FROM patrons WHERE firstName = '$fname' AND lastName = '$lname' AND driversLicenseID = '$dlid'";
+  $searchQuery = "SELECT * FROM patrons WHERE firstName = '$fname' AND lastName = '$lname'"; // AND driversLicenseID = '$dlid'
 
-  $result = $db_conn->query($query);
+  $result = $db_conn->query($searchQuery);
 
   if($result->num_rows)
   {
@@ -26,7 +26,17 @@ if((isset($_POST['firstName'])))
   }
   else
   {
-    echo "Failed";
+    $patronid = "NULL";
+    $banned = 0;
+    $notes = "";
+
+    $addPatron = "INSERT INTO task_list VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $db_conn->prepare($addPatron);
+    $stmt->bind_param("issssssssssis", $patronid, $fname, $mname, $lname, $address, $city, $state, $jurisdiction, $dlid, $exp, $bdate, $banned, $notes);
+    $stmt->execute();
+
+    echo "Added";
   }
 }
 else
